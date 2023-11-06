@@ -7,6 +7,7 @@ const app = express();
 const env = require("dotenv").config({ path: "./.env" });
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const port = process.env.PORT || 4242;
 
 const RateLimit = require("express-rate-limit");
 const limiter = RateLimit({
@@ -47,4 +48,4 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 });
 
-app.listen(4242, () => console.log("Node server listening on port 4242!"));
+app.listen(port, () => console.log("Node server listening on port " + port));
