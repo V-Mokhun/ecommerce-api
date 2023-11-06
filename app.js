@@ -1,11 +1,21 @@
 const express = require("express");
+const compression = require("compression");
 const cors = require("cors");
+
 const app = express();
 
 const env = require("dotenv").config({ path: "./.env" });
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100,
+});
+
+app.use(compression());
+app.use(limiter);
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
