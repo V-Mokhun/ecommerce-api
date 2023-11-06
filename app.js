@@ -18,7 +18,11 @@ app.use(compression());
 app.use(limiter);
 app.use(express.static("public"));
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.SITE_URL,
+  })
+);
 
 const calculateOrderAmount = (items, shippingPrice) => {
   const total =
